@@ -10,7 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <style>
-        /* Base Variables (Default Theme: Cyber) */
         :root {
             --bg-color: #0f172a;
             --sidebar-bg: rgba(15, 23, 42, 0.6);
@@ -26,56 +25,19 @@
             --modal-backdrop: rgba(0, 0, 0, 0.7);
         }
 
-        .theme-ocean {
-            --bg-color: #0c243f;
-            --sidebar-bg: rgba(12, 36, 63, 0.6);
-            --card-bg: rgba(12, 36, 63, 0.7);
-            --accent-color: #34d399;
-            --active-link-bg: rgba(52, 211, 153, 0.1);
-            --schedule-item-bg: linear-gradient(135deg, #34d399, #6ee7b7);
-        }
-
-        .theme-sunset {
-            --bg-color: #2c1a3b;
-            --sidebar-bg: rgba(44, 26, 59, 0.6);
-            --card-bg: rgba(44, 26, 59, 0.7);
-            --accent-color: #f59e0b;
-            --active-link-bg: rgba(245, 158, 11, 0.1);
-            --schedule-item-bg: linear-gradient(135deg, #f59e0b, #fbbf24);
-        }
-
-        .theme-forest {
-            --bg-color: #1a2e29;
-            --sidebar-bg: rgba(26, 46, 41, 0.6);
-            --card-bg: rgba(26, 46, 41, 0.7);
-            --accent-color: #a3e635;
-            --active-link-bg: rgba(163, 230, 53, 0.1);
-            --schedule-item-bg: linear-gradient(135deg, #a3e635, #bef264);
-        }
-
-        .theme-light {
-            --bg-color: #f1f5f9;
-            --sidebar-bg: rgba(255, 255, 255, 0.5);
-            --card-bg: rgba(255, 255, 255, 0.6);
-            --text-color: #0f172a;
-            --text-muted-color: #64748b;
-            --accent-color: #0d9488;
-            --active-link-bg: rgba(20, 184, 166, 0.1);
-            --table-header-bg: rgba(0,0,0,0.03);
-            --table-border: rgba(0,0,0,0.07);
-            --schedule-item-bg: linear-gradient(135deg, #14b8a6, #2dd4bf);
-            --schedule-item-text: #ffffff;
-            --modal-backdrop: rgba(15, 23, 42, 0.5);
-        }
-
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
             font-family: 'Inter', sans-serif;
-            transition: background-color 0.3s ease;
         }
         
-        #tech-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        #tech-background {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
         
         .glass-card {
             background: var(--card-bg);
@@ -86,7 +48,6 @@
         
         .schedule-item { cursor: pointer; }
         .schedule-item-empty { min-height: 60px; cursor: pointer; }
-        td.droppable { background-color: rgba(34, 211, 238, 0.2); outline: 2px dashed var(--accent-color); }
 
         .selected-for-swap {
             outline: 3px solid var(--accent-color);
@@ -94,10 +55,14 @@
             transform: scale(1.05);
             transition: all 0.2s ease-in-out;
         }
-
-        .theme-btn.active {
-            outline: 3px solid var(--accent-color);
-            box-shadow: 0 0 10px var(--accent-color);
+        
+        .swap-valid {
+            outline: 2px solid #22c55e; /* green-500 */
+        }
+        .swap-conflict {
+            outline: 2px solid #ef4444; /* red-500 */
+            background-color: rgba(239, 68, 68, 0.1);
+            cursor: not-allowed !important;
         }
     </style>
 </head>
@@ -167,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     Export ke Excel / Google Sheet
                 </button>
             </div>
-            <p class="text-sm text-cyan-200 mb-6 p-3 bg-cyan-500/10 rounded-lg border border-cyan-500/20">💡 **Tips:** Klik pada satu jadwal, lalu klik pada jadwal lain (atau slot kosong) untuk menukar posisinya.</p>
+            <p class="text-sm text-cyan-200 mb-6 p-3 bg-cyan-500/10 rounded-lg border border-cyan-500/20">💡 **Tips:** Klik pada satu jadwal untuk memilih, lalu klik pada slot lain untuk menukar. Slot <span class="border-b-2 border-green-400">hijau</span> aman, slot <span class="border-b-2 border-red-400">merah</span> bentrok.</p>
             <div id="schedule-container" class="space-y-10">
                  <p class="text-center text-slate-400 p-4">Buat jadwal untuk menampilkannya di sini.</p>
             </div>`,
@@ -356,11 +321,19 @@ document.addEventListener('DOMContentLoaded', () => {
         scheduleContainer.addEventListener('click', e => {
             const targetCell = e.target.closest('td[data-day]');
             
-            if (!targetCell) {
+            // Clear all highlights
+            const clearHighlights = () => {
                 if (firstSelection) {
                     firstSelection.element.classList.remove('selected-for-swap');
-                    firstSelection = null;
                 }
+                document.querySelectorAll('.swap-valid, .swap-conflict').forEach(cell => {
+                    cell.classList.remove('swap-valid', 'swap-conflict');
+                });
+                firstSelection = null;
+            };
+
+            if (!targetCell) {
+                clearHighlights();
                 return;
             }
 
@@ -371,12 +344,50 @@ document.addEventListener('DOMContentLoaded', () => {
             const elementToSelect = scheduleItem || targetCell;
 
             if (!firstSelection) {
+                // FIRST CLICK
                 firstSelection = { element: elementToSelect, className, day, sesi };
                 elementToSelect.classList.add('selected-for-swap');
+                
+                const sourceData = schedules[firstSelection.className]?.[firstSelection.day]?.[firstSelection.sesi];
+                if (!sourceData) return; // No need to show hints if selecting an empty cell
+
+                document.querySelectorAll('td[data-day]').forEach(cell => {
+                    if (cell === targetCell) return;
+                    
+                    const targetClassName = cell.closest('.schedule-table').dataset.className;
+                    const targetDay = cell.dataset.day;
+                    const targetSesi = cell.dataset.sesi;
+                    const targetData = schedules[targetClassName]?.[targetDay]?.[targetSesi];
+
+                    const checkConflict = (data, day, sesi, currentClassName, otherClassName) => {
+                        if (!data) return false;
+                        for (const cn in schedules) {
+                            if (cn === currentClassName || cn === otherClassName) continue;
+                            if (schedules[cn]?.[day]?.[sesi]?.guru === data.guru) {
+                                return true;
+                            }
+                        }
+                        return false;
+                    };
+
+                    if (checkConflict(sourceData, targetDay, targetSesi, firstSelection.className, targetClassName) ||
+                        checkConflict(targetData, firstSelection.day, firstSelection.sesi, targetClassName, firstSelection.className)) {
+                        cell.classList.add('swap-conflict');
+                    } else {
+                        cell.classList.add('swap-valid');
+                    }
+                });
+
             } else {
+                // SECOND CLICK
                 if (firstSelection.element === elementToSelect) {
-                    elementToSelect.classList.remove('selected-for-swap');
-                    firstSelection = null;
+                    clearHighlights();
+                    return;
+                }
+
+                if (targetCell.classList.contains('swap-conflict')) {
+                    showToast('Tidak bisa menukar, jadwal guru bentrok!', true);
+                    clearHighlights();
                     return;
                 }
 
@@ -385,25 +396,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const sourceData = schedules[source.className]?.[source.day]?.[source.sesi];
                 const targetData = schedules[target.className]?.[target.day]?.[target.sesi];
-
-                const checkConflict = (data, day, sesi, currentClassName, otherClassName) => {
-                    if (!data) return false;
-                    for (const cn in schedules) {
-                        if (cn === currentClassName || cn === otherClassName) continue;
-                        if (schedules[cn]?.[day]?.[sesi]?.guru === data.guru) {
-                            showToast(`Bentrok! Guru ${data.guru} sudah mengajar di kelas ${cn}.`, true);
-                            return true;
-                        }
-                    }
-                    return false;
-                };
-
-                if (checkConflict(sourceData, target.day, target.sesi, source.className, target.className) || 
-                    checkConflict(targetData, source.day, source.sesi, target.className, source.className)) {
-                    source.element.classList.remove('selected-for-swap');
-                    firstSelection = null;
-                    return;
-                }
 
                 if (!schedules[source.className]) schedules[source.className] = {};
                 if (!schedules[source.className][source.day]) schedules[source.className][source.day] = {};
@@ -422,7 +414,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 saveToLocalStorage();
                 renderAllSchedules();
                 showToast("Jadwal berhasil ditukar!");
-                firstSelection = null;
+                clearHighlights();
             }
         });
     };
