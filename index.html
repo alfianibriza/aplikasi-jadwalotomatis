@@ -80,7 +80,7 @@
                 <h1 class="text-xl font-bold tracking-tight">AutoScheduler</h1>
             </div>
             <nav id="sidebar-nav" class="mt-6 space-y-2 flex-grow">
-                <a href="#panduan" class="sidebar-link active flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-semibold"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Panduan</a>
+                <a href="#dashboard" class="sidebar-link active flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-semibold"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>Dashboard</a>
                 <a href="#data" class="sidebar-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-semibold"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>Master Data</a>
                 <a href="#jadwal" class="sidebar-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-semibold"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>Buat Jadwal</a>
                 <a href="#pengaturan" class="sidebar-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-semibold"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 0 2l-.15.08a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1 0-2l.15-.08a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>Pengaturan</a>
@@ -100,7 +100,7 @@
     
     <!-- Mobile Bottom Nav -->
     <nav id="mobile-nav" class="md:hidden fixed bottom-0 left-0 right-0 glass-card border-t p-2 flex justify-around" style="border-color: var(--table-border);">
-        <a href="#panduan" class="sidebar-link active flex-1 flex flex-col items-center justify-center p-2 rounded-lg text-xs font-semibold">Panduan</a>
+        <a href="#dashboard" class="sidebar-link active flex-1 flex flex-col items-center justify-center p-2 rounded-lg text-xs font-semibold">Dashboard</a>
         <a href="#data" class="sidebar-link flex-1 flex flex-col items-center justify-center p-2 rounded-lg text-xs font-semibold">Data</a>
         <a href="#jadwal" class="sidebar-link flex-1 flex flex-col items-center justify-center p-2 rounded-lg text-xs font-semibold">Jadwal</a>
         <a href="#pengaturan" class="sidebar-link flex-1 flex flex-col items-center justify-center p-2 rounded-lg text-xs font-semibold">Pengaturan</a>
@@ -144,28 +144,34 @@ document.addEventListener('DOMContentLoaded', () => {
         'view-data': `
             <div class="space-y-8">
                 <div>
-                    <div class="flex justify-between items-center mb-2"><h3 class="text-2xl font-semibold tracking-tight">Data Kelas</h3><button onclick="openModal('kelas-modal')" class="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-1.5 px-4 rounded-md shadow text-sm flex items-center gap-1.5 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Tambah</button></div>
+                    <div class="flex justify-between items-center mb-2"><h3 class="text-2xl font-semibold tracking-tight">Data Kelas</h3><button id="add-kelas-btn" class="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-1.5 px-4 rounded-md shadow text-sm flex items-center gap-1.5 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Tambah</button></div>
                     <div class="glass-card rounded-lg border-none overflow-hidden shadow-sm"><table class="w-full"><tbody id="kelas-list"></tbody></table></div>
                 </div>
                 <div>
-                    <div class="flex justify-between items-center mb-2"><h3 class="text-2xl font-semibold tracking-tight">Data Guru</h3><button onclick="openModal('guru-modal')" class="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-1.5 px-4 rounded-md shadow text-sm flex items-center gap-1.5 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Tambah</button></div>
+                    <div class="flex justify-between items-center mb-2"><h3 class="text-2xl font-semibold tracking-tight">Data Guru</h3><button id="add-guru-btn" class="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-1.5 px-4 rounded-md shadow text-sm flex items-center gap-1.5 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Tambah</button></div>
                     <div class="glass-card rounded-lg border-none overflow-hidden shadow-sm"><table class="w-full"><tbody id="guru-list"></tbody></table></div>
                 </div>
                 <div>
-                    <div class="flex justify-between items-center mb-2"><h3 class="text-2xl font-semibold tracking-tight">Data Mata Pelajaran</h3><button onclick="openModal('matapelajaran-modal')" class="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-1.5 px-4 rounded-md shadow text-sm flex items-center gap-1.5 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Tambah</button></div>
+                    <div class="flex justify-between items-center mb-2"><h3 class="text-2xl font-semibold tracking-tight">Data Mata Pelajaran</h3><button id="add-matapelajaran-btn" class="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-1.5 px-4 rounded-md shadow text-sm flex items-center gap-1.5 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Tambah</button></div>
                     <div class="glass-card rounded-lg border-none overflow-hidden shadow-sm"><table class="w-full"><tbody id="matapelajaran-list"></tbody></table></div>
                 </div>
                 <div>
-                    <div class="flex justify-between items-center mb-2"><h3 class="text-2xl font-semibold tracking-tight">Alokasi Pelajaran & Guru</h3><button onclick="openModal('alokasi-modal')" class="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-1.5 px-4 rounded-md shadow text-sm flex items-center gap-1.5 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Tambah</button></div>
+                    <div class="flex justify-between items-center mb-2"><h3 class="text-2xl font-semibold tracking-tight">Alokasi Pelajaran & Guru</h3><button id="add-alokasi-btn" class="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-1.5 px-4 rounded-md shadow text-sm flex items-center gap-1.5 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg> Tambah</button></div>
                     <div class="glass-card rounded-lg border-none overflow-hidden shadow-sm"><table class="w-full"><tbody id="alokasi-list"></tbody></table></div>
                 </div>
             </div>`,
-        'view-panduan': `
-            <h3 class="text-2xl font-semibold tracking-tight mb-4">Panduan Penggunaan</h3>
+        'view-dashboard': `
+            <h3 class="text-2xl font-semibold tracking-tight mb-4">Dashboard</h3>
+            <div class="mb-8">
+                <h4 class="text-xl font-semibold mb-3">Status Jadwal Kelas</h4>
+                <div id="dashboard-status" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Status cards will be injected here -->
+                </div>
+            </div>
             <div class="space-y-6 glass-card rounded-xl p-6">
                 <div>
-                    <h4 class="text-xl font-semibold mb-2">Selamat Datang di AutoScheduler!</h4>
-                    <p style="color: var(--text-muted-color);">Aplikasi ini dirancang untuk membantu Anda menyusun jadwal pelajaran secara otomatis dan efisien. Ikuti langkah-langkah di bawah ini untuk memulai.</p>
+                    <h4 class="text-xl font-semibold mb-2">Panduan Penggunaan</h4>
+                    <p style="color: var(--text-muted-color);">Ikuti langkah-langkah di bawah ini untuk memulai.</p>
                 </div>
                 <div class="space-y-4">
                     <div class="flex gap-4">
@@ -219,10 +225,10 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     const modalFormTemplates = {
-        'kelas-form': `<input type="hidden" id="kelas-id"><div class="mb-4"><label for="nama-kelas" class="block text-sm font-medium mb-1">Nama Kelas</label><input type="text" id="nama-kelas" class="w-full bg-slate-800/20 border-slate-600 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500 text-slate-100 placeholder:text-slate-400" placeholder="Contoh: 10 IPA 1" required></div><div class="flex justify-end gap-2"><button type="button" onclick="closeModal('kelas-modal')" class="bg-slate-600 hover:bg-slate-500 text-slate-200 py-2 px-4 rounded-md transition-colors">Batal</button><button type="submit" class="bg-cyan-500 hover:bg-cyan-600 text-white py-2 px-4 rounded-md transition-colors">Simpan</button></div>`,
-        'guru-form': `<input type="hidden" id="guru-id"><div class="mb-4"><label for="nama-guru" class="block text-sm font-medium mb-1">Nama Guru</label><input type="text" id="nama-guru" class="w-full bg-slate-800/20 border-slate-600 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500 text-slate-100 placeholder:text-slate-400" placeholder="Contoh: Budi Santoso" required></div><div class="flex justify-end gap-2"><button type="button" onclick="closeModal('guru-modal')" class="bg-slate-600 hover:bg-slate-500 text-slate-200 py-2 px-4 rounded-md transition-colors">Batal</button><button type="submit" class="bg-cyan-500 hover:bg-cyan-600 text-white py-2 px-4 rounded-md transition-colors">Simpan</button></div>`,
-        'matapelajaran-form': `<input type="hidden" id="matapelajaran-id"><div class="mb-4"><label for="nama-matapelajaran" class="block text-sm font-medium mb-1">Nama Mata Pelajaran</label><input type="text" id="nama-matapelajaran" class="w-full bg-slate-800/20 border-slate-600 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500 text-slate-100 placeholder:text-slate-400" placeholder="Contoh: Matematika" required></div><div class="flex justify-end gap-2"><button type="button" onclick="closeModal('matapelajaran-modal')" class="bg-slate-600 hover:bg-slate-500 text-slate-200 py-2 px-4 rounded-md transition-colors">Batal</button><button type="submit" class="bg-cyan-500 hover:bg-cyan-600 text-white py-2 px-4 rounded-md transition-colors">Simpan</button></div>`,
-        'alokasi-form': `<input type="hidden" id="alokasi-id"><div class="space-y-4"><label class="block"><span class="text-sm font-medium">Mata Pelajaran</span><select id="alokasi-mapel" class="w-full mt-1 bg-slate-800/20 border-slate-600 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500 text-slate-100" required></select></label><label class="block"><span class="text-sm font-medium">Guru</span><select id="alokasi-guru" class="w-full mt-1 bg-slate-800/20 border-slate-600 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500 text-slate-100" required></select></label><label class="block"><span class="text-sm font-medium">Untuk Kelas</span><select id="alokasi-kelas" class="w-full mt-1 bg-slate-800/20 border-slate-600 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500 text-slate-100" required></select></label><label class="block"><span class="text-sm font-medium">Jumlah Sesi per Minggu</span><input type="number" id="alokasi-sesi" class="w-full mt-1 bg-slate-800/20 border-slate-600 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500 text-slate-100 placeholder:text-slate-400" placeholder="Contoh: 4" min="1" required></label></div><div class="flex justify-end gap-2 mt-6"><button type="button" onclick="closeModal('alokasi-modal')" class="bg-slate-600 hover:bg-slate-500 text-slate-200 py-2 px-4 rounded-md transition-colors">Batal</button><button type="submit" class="bg-cyan-500 hover:bg-cyan-600 text-white py-2 px-4 rounded-md transition-colors">Simpan</button></div>`
+        'kelas-form': `<input type="hidden" id="kelas-id"><div class="mb-4"><label for="nama-kelas" class="block text-sm font-medium mb-1">Nama Kelas</label><input type="text" id="nama-kelas" class="w-full bg-slate-800/20 border-slate-600 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500 text-slate-100 placeholder:text-slate-400" placeholder="Contoh: 10 IPA 1" required></div><div class="flex justify-end gap-2"><button type="button" class="close-modal-btn bg-slate-600 hover:bg-slate-500 text-slate-200 py-2 px-4 rounded-md transition-colors">Batal</button><button type="submit" class="bg-cyan-500 hover:bg-cyan-600 text-white py-2 px-4 rounded-md transition-colors">Simpan</button></div>`,
+        'guru-form': `<input type="hidden" id="guru-id"><div class="mb-4"><label for="nama-guru" class="block text-sm font-medium mb-1">Nama Guru</label><input type="text" id="nama-guru" class="w-full bg-slate-800/20 border-slate-600 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500 text-slate-100 placeholder:text-slate-400" placeholder="Contoh: Budi Santoso" required></div><div class="flex justify-end gap-2"><button type="button" class="close-modal-btn bg-slate-600 hover:bg-slate-500 text-slate-200 py-2 px-4 rounded-md transition-colors">Batal</button><button type="submit" class="bg-cyan-500 hover:bg-cyan-600 text-white py-2 px-4 rounded-md transition-colors">Simpan</button></div>`,
+        'matapelajaran-form': `<input type="hidden" id="matapelajaran-id"><div class="mb-4"><label for="nama-matapelajaran" class="block text-sm font-medium mb-1">Nama Mata Pelajaran</label><input type="text" id="nama-matapelajaran" class="w-full bg-slate-800/20 border-slate-600 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500 text-slate-100 placeholder:text-slate-400" placeholder="Contoh: Matematika" required></div><div class="flex justify-end gap-2"><button type="button" class="close-modal-btn bg-slate-600 hover:bg-slate-500 text-slate-200 py-2 px-4 rounded-md transition-colors">Batal</button><button type="submit" class="bg-cyan-500 hover:bg-cyan-600 text-white py-2 px-4 rounded-md transition-colors">Simpan</button></div>`,
+        'alokasi-form': `<input type="hidden" id="alokasi-id"><div class="space-y-4"><label class="block"><span class="text-sm font-medium">Mata Pelajaran</span><select id="alokasi-mapel" class="w-full mt-1 bg-slate-800/20 border-slate-600 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500 text-slate-100" required></select></label><label class="block"><span class="text-sm font-medium">Guru</span><select id="alokasi-guru" class="w-full mt-1 bg-slate-800/20 border-slate-600 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500 text-slate-100" required></select></label><label class="block"><span class="text-sm font-medium">Untuk Kelas</span><select id="alokasi-kelas" class="w-full mt-1 bg-slate-800/20 border-slate-600 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500 text-slate-100" required></select></label><label class="block"><span class="text-sm font-medium">Jumlah Sesi per Minggu</span><input type="number" id="alokasi-sesi" class="w-full mt-1 bg-slate-800/20 border-slate-600 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500 text-slate-100 placeholder:text-slate-400" placeholder="Contoh: 4" min="1" required></label></div><div class="flex justify-end gap-2 mt-6"><button type="button" class="close-modal-btn bg-slate-600 hover:bg-slate-500 text-slate-200 py-2 px-4 rounded-md transition-colors">Batal</button><button type="submit" class="bg-cyan-500 hover:bg-cyan-600 text-white py-2 px-4 rounded-md transition-colors">Simpan</button></div>`
     };
 
     Object.keys(viewTemplates).forEach(key => {
@@ -276,24 +282,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const exportBtn = document.getElementById('export-all-csv-btn');
         const hasMasterData = kelas.length > 0 && alokasiPelajaran.length > 0;
         if(generateBtn) generateBtn.disabled = !hasMasterData;
-        if(exportBtn) exportBtn.disabled = Object.keys(schedules).length === 0;
+        if(exportBtn) exportBtn.disabled = Object.keys(schedules).length > 0;
     };
 
     const renderKelasList = () => {
         const list = document.getElementById('kelas-list');
         list.innerHTML = kelas.length === 0 ? `<tr><td class="p-4 text-center text-slate-400">Belum ada data kelas.</td></tr>` :
-            kelas.map(k => `<tr class="border-b" style="border-color: var(--table-border);"><td class="p-3 font-medium">${k.nama}</td><td class="p-3 text-right"><button onclick="editKelas('${k.id}')" class="text-cyan-400 hover:text-cyan-200 font-semibold mr-3 p-1 text-sm">Edit</button><button onclick="deleteKelas('${k.id}')" class="text-red-400 hover:text-red-300 font-semibold p-1 text-sm">Hapus</button></td></tr>`).join('');
+            kelas.map(k => `<tr class="border-b" style="border-color: var(--table-border);"><td class="p-3 font-medium">${k.nama}</td><td class="p-3 text-right"><button data-id="${k.id}" data-type="kelas" class="edit-btn text-cyan-400 hover:text-cyan-200 font-semibold mr-3 p-1 text-sm">Edit</button><button data-id="${k.id}" data-type="kelas" class="delete-btn text-red-400 hover:text-red-300 font-semibold p-1 text-sm">Hapus</button></td></tr>`).join('');
         updateButtonStates();
     };
     const renderGuruList = () => {
         const list = document.getElementById('guru-list');
         list.innerHTML = guru.length === 0 ? `<tr><td class="p-4 text-center text-slate-400">Belum ada data guru.</td></tr>` :
-            guru.map(g => `<tr class="border-b" style="border-color: var(--table-border);"><td class="p-3 font-medium">${g.nama}</td><td class="p-3 text-right"><button onclick="editGuru('${g.id}')" class="text-cyan-400 hover:text-cyan-200 font-semibold mr-3 p-1 text-sm">Edit</button><button onclick="deleteGuru('${g.id}')" class="text-red-400 hover:text-red-300 font-semibold p-1 text-sm">Hapus</button></td></tr>`).join('');
+            guru.map(g => `<tr class="border-b" style="border-color: var(--table-border);"><td class="p-3 font-medium">${g.nama}</td><td class="p-3 text-right"><button data-id="${g.id}" data-type="guru" class="edit-btn text-cyan-400 hover:text-cyan-200 font-semibold mr-3 p-1 text-sm">Edit</button><button data-id="${g.id}" data-type="guru" class="delete-btn text-red-400 hover:text-red-300 font-semibold p-1 text-sm">Hapus</button></td></tr>`).join('');
     };
     const renderMataPelajaranList = () => {
         const list = document.getElementById('matapelajaran-list');
         list.innerHTML = mataPelajaran.length === 0 ? `<tr><td class="p-4 text-center text-slate-400">Belum ada data mata pelajaran.</td></tr>` :
-            mataPelajaran.map(m => `<tr class="border-b" style="border-color: var(--table-border);"><td class="p-3 font-medium">${m.nama}</td><td class="p-3 text-right"><button onclick="editMataPelajaran('${m.id}')" class="text-cyan-400 hover:text-cyan-200 font-semibold mr-3 p-1 text-sm">Edit</button><button onclick="deleteMataPelajaran('${m.id}')" class="text-red-400 hover:text-red-300 font-semibold p-1 text-sm">Hapus</button></td></tr>`).join('');
+            mataPelajaran.map(m => `<tr class="border-b" style="border-color: var(--table-border);"><td class="p-3 font-medium">${m.nama}</td><td class="p-3 text-right"><button data-id="${m.id}" data-type="matapelajaran" class="edit-btn text-cyan-400 hover:text-cyan-200 font-semibold mr-3 p-1 text-sm">Edit</button><button data-id="${m.id}" data-type="matapelajaran" class="delete-btn text-red-400 hover:text-red-300 font-semibold p-1 text-sm">Hapus</button></td></tr>`).join('');
     };
     const renderAlokasiList = () => {
         const list = document.getElementById('alokasi-list');
@@ -308,7 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const mapelName = m ? m.nama : `<span class="text-red-500">N/A</span>`;
             const guruName = g ? g.nama : `<span class="text-red-500">N/A</span>`;
             const kelasName = k ? k.nama : `<span class="text-red-500">N/A</span>`;
-            return `<tr class="border-b" style="border-color: var(--table-border);"><td class="p-3"><div class="font-medium">${mapelName} (${a.sesi} Sesi)</div><div class="text-sm" style="color: var(--text-muted-color);">${guruName} &mdash; <strong>${kelasName}</strong></div></td><td class="p-3 text-right"><button onclick="editAlokasi('${a.id}')" class="text-cyan-400 hover:text-cyan-200 font-semibold mr-3 p-1 text-sm">Edit</button><button onclick="deleteAlokasi('${a.id}')" class="text-red-400 hover:text-red-300 font-semibold p-1 text-sm">Hapus</button></td></tr>`;
+            return `<tr class="border-b" style="border-color: var(--table-border);"><td class="p-3"><div class="font-medium">${mapelName} (${a.sesi} Sesi)</div><div class="text-sm" style="color: var(--text-muted-color);">${guruName} &mdash; <strong>${kelasName}</strong></div></td><td class="p-3 text-right"><button data-id="${a.id}" data-type="alokasi" class="edit-btn text-cyan-400 hover:text-cyan-200 font-semibold mr-3 p-1 text-sm">Edit</button><button data-id="${a.id}" data-type="alokasi" class="delete-btn text-red-400 hover:text-red-300 font-semibold p-1 text-sm">Hapus</button></td></tr>`;
         }).join('');
         updateButtonStates();
     };
@@ -441,7 +447,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }).join('');
     };
 
-    window.openModal = (modalId, data = null) => {
+    const openModal = (modalId, data = null) => {
         const modal = document.getElementById(modalId);
         const form = modal.querySelector('form');
         form.reset();
@@ -475,7 +481,7 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.classList.add('flex');
     };
     
-    window.closeModal = (modalId) => document.getElementById(modalId).classList.add('hidden');
+    const closeModal = (modalId) => document.getElementById(modalId).classList.add('hidden');
     
     const handleFormSubmit = (formId, dataArray, renderFunc, name) => {
         document.getElementById(formId).addEventListener('submit', (e) => {
@@ -489,7 +495,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             if (id) {
                 const index = dataArray.findIndex(item => item.id === id);
-                if(name === 'kelas') {
+                if(name === 'kelas' && dataArray[index]) {
                     const oldNama = dataArray[index].nama;
                     if (schedules[oldNama]) { schedules[entryData.nama] = schedules[oldNama]; delete schedules[oldNama]; }
                 }
@@ -505,35 +511,37 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
     
-    const handleDelete = (id, dataArray, renderFunc, name, cascadeArray = null) => {
+    const handleDelete = (id, dataArray, renderFunc, name) => {
         const itemToDelete = dataArray.find(item => item.id === id);
-        if (!itemToDelete) return;
+        if (!itemToDelete) {
+             console.error(`Item with ID "${id}" not found in "${name}" array.`);
+             showToast("Error: Data tidak ditemukan untuk dihapus.", true);
+             return;
+        }
 
         if(name === 'kelas' && schedules[itemToDelete.nama]) {
             delete schedules[itemToDelete.nama];
         }
-        if(cascadeArray) {
-            const cascadeKey = name === 'kelas' ? 'kelasId' : (name === 'guru' ? 'guruId' : 'mapelId');
+        
+        let cascadeKey;
+        if (name === 'kelas') cascadeKey = 'kelasId';
+        else if (name === 'guru') cascadeKey = 'guruId';
+        else if (name === 'matapelajaran') cascadeKey = 'mapelId';
+
+        if (cascadeKey) {
             alokasiPelajaran = alokasiPelajaran.filter(a => a[cascadeKey] !== id);
             renderAlokasiList();
         }
+        
         const index = dataArray.findIndex(item => item.id === id);
         if (index > -1) {
             dataArray.splice(index, 1);
         }
+        
         saveToLocalStorage();
         renderFunc();
-        showToast(`Data ${name} dan alokasi terkait berhasil dihapus!`);
+        showToast(`Data ${name} berhasil dihapus!`);
     };
-
-    window.editKelas = id => openModal('kelas-modal', kelas.find(i => i.id === id));
-    window.deleteKelas = id => handleDelete(id, kelas, renderKelasList, 'kelas', alokasiPelajaran);
-    window.editGuru = id => openModal('guru-modal', guru.find(i => i.id === id));
-    window.deleteGuru = id => handleDelete(id, guru, renderGuruList, 'guru', alokasiPelajaran);
-    window.editMataPelajaran = id => openModal('matapelajaran-modal', mataPelajaran.find(i => i.id === id));
-    window.deleteMataPelajaran = id => handleDelete(id, mataPelajaran, renderMataPelajaranList, 'matapelajaran', alokasiPelajaran);
-    window.editAlokasi = id => openModal('alokasi-modal', alokasiPelajaran.find(i => i.id === id));
-    window.deleteAlokasi = id => handleDelete(id, alokasiPelajaran, renderAlokasiList, 'alokasi');
 
     handleFormSubmit('kelas-form', kelas, renderKelasList, 'kelas');
     handleFormSubmit('guru-form', guru, renderGuruList, 'guru');
@@ -545,7 +553,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const targetId = hash.substring(1);
         document.getElementById('view-jadwal').style.display = targetId === 'jadwal' ? 'block' : 'none';
         document.getElementById('view-data').style.display = targetId === 'data' ? 'block' : 'none';
-        document.getElementById('view-panduan').style.display = targetId === 'panduan' ? 'block' : 'none';
+        document.getElementById('view-dashboard').style.display = targetId === 'dashboard' ? 'block' : 'none';
         document.getElementById('view-pengaturan').style.display = targetId === 'pengaturan' ? 'block' : 'none';
         sidebarLinks.forEach(link => {
             link.classList.toggle('active', link.getAttribute('href') === hash);
@@ -557,6 +565,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 link.style.color = 'var(--text-color)';
             }
         });
+        if (targetId === 'dashboard') {
+            renderDashboardStatus();
+        }
     };
     
     sidebarLinks.forEach(link => {
@@ -591,9 +602,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 for (let i = 0; i < subjectBag.length && !placed; i++) {
                     const alokasi = subjectBag[i];
                     const guruInfo = guru.find(g => g.id === alokasi.guruId);
-                    if (teacherSchedule[guruInfo.nama]?.[slot.hari]?.includes(slot.sesi)) continue;
+                    if (!guruInfo || teacherSchedule[guruInfo.nama]?.[slot.hari]?.includes(slot.sesi)) continue;
                     
                     const mapelInfo = mataPelajaran.find(m => m.id === alokasi.mapelId);
+                    if (!mapelInfo) continue;
+
                     if (!newClassSchedule[slot.hari]) newClassSchedule[slot.hari] = {};
                     newClassSchedule[slot.hari][slot.sesi] = { id: alokasi.id, nama: mapelInfo.nama, guru: guruInfo.nama };
                     
@@ -844,8 +857,89 @@ document.addEventListener('DOMContentLoaded', () => {
         init();
     });
 
+    // --- EVENT DELEGATION FOR CRUD ---
+    document.getElementById('view-data').addEventListener('click', e => {
+        const target = e.target.closest('button');
+        if (!target) return;
+
+        if (target.id && target.id.startsWith('add-')) {
+            const type = target.id.replace('add-', '').replace('-btn', '');
+            let modalId;
+            if (type === 'matapelajaran') {
+                modalId = 'matapelajaran-modal';
+            } else {
+                modalId = `${type}-modal`;
+            }
+            openModal(modalId);
+        } else {
+            const id = target.dataset.id;
+            const type = target.dataset.type;
+            if (!id || !type) return;
+
+            if (target.classList.contains('edit-btn')) {
+                if (type === 'kelas') openModal('kelas-modal', kelas.find(i => i.id === id));
+                else if (type === 'guru') openModal('guru-modal', guru.find(i => i.id === id));
+                else if (type === 'matapelajaran') openModal('matapelajaran-modal', mataPelajaran.find(i => i.id === id));
+                else if (type === 'alokasi') openModal('alokasi-modal', alokasiPelajaran.find(i => i.id === id));
+            } else if (target.classList.contains('delete-btn')) {
+                if (type === 'kelas') handleDelete(id, kelas, renderKelasList, 'kelas');
+                else if (type === 'guru') handleDelete(id, guru, renderGuruList, 'guru');
+                else if (type === 'matapelajaran') handleDelete(id, mataPelajaran, renderMataPelajaranList, 'matapelajaran');
+                else if (type === 'alokasi') handleDelete(id, alokasiPelajaran, renderAlokasiList, 'alokasi');
+            }
+        }
+    });
+    
+    document.querySelectorAll('.close-modal-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const modal = btn.closest('.fixed');
+            if (modal) {
+                closeModal(modal.id);
+            }
+        });
+    });
+
+    const renderDashboardStatus = () => {
+        const statusContainer = document.getElementById('dashboard-status');
+        if (!statusContainer) return;
+
+        if (kelas.length === 0) {
+            statusContainer.innerHTML = `<p class="col-span-full text-center text-slate-400">Belum ada data kelas untuk ditampilkan.</p>`;
+            return;
+        }
+
+        const totalSlots = daysOrder.length * 7; // 42
+        statusContainer.innerHTML = kelas.map(k => {
+            const classSchedule = schedules[k.nama] || {};
+            let filledSlots = 0;
+            Object.values(classSchedule).forEach(daySchedule => {
+                filledSlots += Object.keys(daySchedule).length;
+            });
+
+            const percentage = totalSlots > 0 ? Math.round((filledSlots / totalSlots) * 100) : 0;
+            const isComplete = percentage >= 100;
+
+            return `
+                <div class="glass-card p-4 rounded-lg flex flex-col gap-2 border-l-4 ${isComplete ? 'border-green-400' : 'border-cyan-400'}">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-lg">${k.nama}</span>
+                        ${isComplete ? 
+                            `<span class="flex items-center gap-1 text-sm text-green-400"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Lengkap</span>` :
+                            `<span class="text-sm font-medium text-slate-300">${percentage}%</span>`
+                        }
+                    </div>
+                    <div class="w-full bg-slate-700 rounded-full h-2.5">
+                        <div class="h-2.5 rounded-full ${isComplete ? 'bg-green-500' : 'bg-cyan-500'}" style="width: ${percentage}%"></div>
+                    </div>
+                    <p class="text-xs text-slate-400">${filledSlots} dari ${totalSlots} sesi terisi.</p>
+                </div>
+            `;
+        }).join('');
+    };
+
+
     // --- INITIALIZATION ---
-    switchView('#panduan');
+    switchView('#dashboard');
     renderAllLists();
     renderAllSchedules();
     setCanvasSize();
