@@ -125,16 +125,21 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="flex flex-col sm:flex-row gap-3 mb-4">
                 <button id="generate-all-schedules-btn" class="w-full sm:w-auto flex-grow bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2.5 px-5 rounded-lg shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
-                    Buat Jadwal Otomatis
+                    Buat Jadwal Baru
                 </button>
+                <button id="import-csv-btn" class="w-full sm:w-auto bg-violet-500 hover:bg-violet-600 text-white font-bold py-2.5 px-5 rounded-lg shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+                    Import Jadwal
+                </button>
+                <input type="file" id="import-csv-input" class="hidden" accept=".csv">
                 <button id="export-all-csv-btn" class="w-full sm:w-auto bg-sky-500 hover:bg-sky-600 text-white font-bold py-2.5 px-5 rounded-lg shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M8 11h8"/><path d="M8 16h8"/><path d="M11 8v8"/></svg>
-                    Export ke Excel / Google Sheet
+                    Export Jadwal
                 </button>
             </div>
             <p class="text-sm text-cyan-200 mb-6 p-3 bg-cyan-500/10 rounded-lg border border-cyan-500/20">💡 **Tips:** Klik pada satu jadwal untuk memilih, lalu klik pada slot lain untuk menukar. Slot <span class="border-b-2 border-green-400">hijau</span> aman, slot <span class="border-b-2 border-red-400">merah</span> bentrok.</p>
             <div id="schedule-container" class="space-y-10">
-                 <p class="text-center text-slate-400 p-4">Buat jadwal untuk menampilkannya di sini.</p>
+                 <p class="text-center text-slate-400 p-4">Buat atau import jadwal untuk menampilkannya di sini.</p>
             </div>`,
         'view-data': `
             <div class="space-y-8">
@@ -181,14 +186,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="flex-shrink-0 w-8 h-8 rounded-full bg-cyan-500 text-white flex items-center justify-center font-bold">3</div>
                         <div>
                             <h5 class="font-semibold">Buat Jadwal Otomatis</h5>
-                            <p style="color: var(--text-muted-color);">Pindah ke tab <strong>Buat Jadwal</strong>. Klik tombol <strong>"Buat Jadwal Otomatis"</strong>. Sistem akan menyusun jadwal untuk semua kelas secara acak dan memastikan tidak ada jadwal guru yang bentrok.</p>
+                            <p style="color: var(--text-muted-color);">Pindah ke tab <strong>Buat Jadwal</strong>. Klik tombol <strong>"Buat Jadwal Baru"</strong>. Sistem akan menyusun jadwal untuk semua kelas secara acak dan memastikan tidak ada jadwal guru yang bentrok.</p>
                         </div>
                     </div>
                     <div class="flex gap-4">
                         <div class="flex-shrink-0 w-8 h-8 rounded-full bg-cyan-500 text-white flex items-center justify-center font-bold">4</div>
                         <div>
-                            <h5 class="font-semibold">Sesuaikan & Ekspor</h5>
-                            <p style="color: var(--text-muted-color);">Jika ada jadwal yang kurang sesuai, Anda bisa mengubah posisinya dengan cara <strong>klik-dan-tukar</strong>. Setelah final, klik tombol <strong>"Export"</strong> untuk mengunduh jadwal dalam format CSV.</p>
+                            <h5 class="font-semibold">Sesuaikan, Simpan, & Muat</h5>
+                            <p style="color: var(--text-muted-color);">Jika ada jadwal yang kurang sesuai, ubah posisinya dengan <strong>klik-dan-tukar</strong>. Setelah final, klik <strong>"Export Jadwal"</strong> untuk menyimpan file jadwal. Keesokan harinya, Anda bisa memuat kembali jadwal tersebut menggunakan tombol <strong>"Import Jadwal"</strong>.</p>
                         </div>
                     </div>
                 </div>
@@ -321,7 +326,6 @@ document.addEventListener('DOMContentLoaded', () => {
         scheduleContainer.addEventListener('click', e => {
             const targetCell = e.target.closest('td[data-day]');
             
-            // Clear all highlights
             const clearHighlights = () => {
                 if (firstSelection) {
                     firstSelection.element.classList.remove('selected-for-swap');
@@ -344,13 +348,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const elementToSelect = scheduleItem || targetCell;
 
             if (!firstSelection) {
-                // FIRST CLICK
                 firstSelection = { element: elementToSelect, className, day, sesi };
                 elementToSelect.classList.add('selected-for-swap');
                 
                 const sourceData = schedules[firstSelection.className]?.[firstSelection.day]?.[firstSelection.sesi];
-                if (!sourceData) return; // No need to show hints if selecting an empty cell
-
+                
                 document.querySelectorAll('td[data-day]').forEach(cell => {
                     if (cell === targetCell) return;
                     
@@ -379,7 +381,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
             } else {
-                // SECOND CLICK
                 if (firstSelection.element === elementToSelect) {
                     clearHighlights();
                     return;
@@ -422,7 +423,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const renderAllSchedules = () => {
         const container = document.getElementById('schedule-container');
         if (Object.keys(schedules).length === 0 || kelas.length === 0) {
-            container.innerHTML = `<p class="text-center text-slate-400 p-4">Buat jadwal untuk menampilkannya di sini.</p>`; return;
+            container.innerHTML = `<p class="text-center text-slate-400 p-4">Buat atau import jadwal untuk menampilkannya di sini.</p>`; return;
         }
         container.innerHTML = kelas.map(k => {
             const classSchedule = schedules[k.nama] || {};
@@ -505,9 +506,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     const handleDelete = (id, dataArray, renderFunc, name, cascadeArray = null) => {
-        if(name === 'kelas') {
-            const k = dataArray.find(item => item.id === id);
-            if(schedules[k.nama]) delete schedules[k.nama];
+        const itemToDelete = dataArray.find(item => item.id === id);
+        if (!itemToDelete) return;
+
+        if(name === 'kelas' && schedules[itemToDelete.nama]) {
+            delete schedules[itemToDelete.nama];
         }
         if(cascadeArray) {
             const cascadeKey = name === 'kelas' ? 'kelasId' : (name === 'guru' ? 'guruId' : 'mapelId');
@@ -515,7 +518,9 @@ document.addEventListener('DOMContentLoaded', () => {
             renderAlokasiList();
         }
         const index = dataArray.findIndex(item => item.id === id);
-        dataArray.splice(index, 1);
+        if (index > -1) {
+            dataArray.splice(index, 1);
+        }
         saveToLocalStorage();
         renderFunc();
         showToast(`Data ${name} dan alokasi terkait berhasil dihapus!`);
@@ -607,6 +612,116 @@ document.addEventListener('DOMContentLoaded', () => {
         updateButtonStates();
         renderAllSchedules();
         showToast(unplacedCount > 0 ? `Jadwal selesai. ${unplacedCount} sesi tidak dapat ditempatkan.` : `Jadwal berhasil dibuat!`, unplacedCount > 0);
+    });
+
+    document.getElementById('import-csv-btn').addEventListener('click', () => {
+        document.getElementById('import-csv-input').click();
+    });
+
+    document.getElementById('import-csv-input').addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        Papa.parse(file, {
+            complete: (results) => {
+                try {
+                    const data = results.data;
+                    if (data.length < 2) throw new Error('File CSV kosong atau tidak valid.');
+
+                    const header = data[0].map(h => h.trim());
+                    const expectedHeader = ['Kelas', 'Sesi', ...daysOrder];
+                    if (JSON.stringify(header) !== JSON.stringify(expectedHeader)) {
+                        throw new Error('Format header CSV tidak sesuai. Pastikan file diekspor dari aplikasi ini.');
+                    }
+
+                    const tempSchedules = {};
+                    const tempClassNames = new Set();
+                    const tempGuruNames = new Set();
+                    const tempMapelNames = new Set();
+
+                    for (let i = 1; i < data.length; i++) {
+                        const row = data[i];
+                        if (row.length < expectedHeader.length || !row[0]) continue;
+
+                        const className = row[0].trim();
+                        const sesi = row[1].trim();
+                        if (!className || !sesi) continue;
+
+                        tempClassNames.add(className);
+                        if (!tempSchedules[className]) tempSchedules[className] = {};
+
+                        daysOrder.forEach((day, dayIndex) => {
+                            const cellData = row[dayIndex + 2];
+                            if (cellData && cellData.trim() !== '') {
+                                const match = cellData.trim().match(/(.+?) \((.+)\)$/); 
+                                if (match) {
+                                    const [_, mapelNama, guruNama] = match.map(s => s.trim());
+                                    
+                                    if (!tempSchedules[className][day]) tempSchedules[className][day] = {};
+                                    
+                                    tempGuruNames.add(guruNama);
+                                    tempMapelNames.add(mapelNama);
+
+                                    tempSchedules[className][day][sesi] = {
+                                        nama: mapelNama,
+                                        guru: guruNama
+                                    };
+                                }
+                            }
+                        });
+                    }
+
+                    if (tempClassNames.size === 0) {
+                        throw new Error("Tidak ada data jadwal yang valid ditemukan di dalam file.");
+                    }
+
+                    kelas = Array.from(tempClassNames).map(nama => ({ id: `k-imp-${Date.now()}-${Math.random()}`, nama }));
+                    guru = Array.from(tempGuruNames).map(nama => ({ id: `g-imp-${Date.now()}-${Math.random()}`, nama }));
+                    mataPelajaran = Array.from(tempMapelNames).map(nama => ({ id: `m-imp-${Date.now()}-${Math.random()}`, nama }));
+                    
+                    const alokasiTracker = {};
+                    Object.keys(tempSchedules).forEach(className => {
+                        const classObj = kelas.find(k => k.nama === className);
+                        if (!classObj) return;
+
+                        Object.keys(tempSchedules[className]).forEach(day => {
+                            Object.keys(tempSchedules[className][day]).forEach(sesi => {
+                                const scheduleItem = tempSchedules[className][day][sesi];
+                                const guruObj = guru.find(g => g.nama === scheduleItem.guru);
+                                const mapelObj = mataPelajaran.find(m => m.nama === scheduleItem.nama);
+                                
+                                if (guruObj && mapelObj) {
+                                    const key = `${classObj.id}-${guruObj.id}-${mapelObj.id}`;
+                                    if(!alokasiTracker[key]) {
+                                        alokasiTracker[key] = {
+                                            id: `a-imp-${key}`,
+                                            kelasId: classObj.id,
+                                            guruId: guruObj.id,
+                                            mapelId: mapelObj.id,
+                                            sesi: 0
+                                        };
+                                    }
+                                    alokasiTracker[key].sesi++;
+                                    scheduleItem.id = alokasiTracker[key].id;
+                                }
+                            });
+                        });
+                    });
+
+                    alokasiPelajaran = Object.values(alokasiTracker);
+                    schedules = tempSchedules;
+
+                    saveToLocalStorage();
+                    renderAllLists();
+                    renderAllSchedules();
+                    updateButtonStates();
+                    showToast('Jadwal berhasil diimpor!');
+                } catch (error) {
+                    showToast(`Gagal mengimpor: ${error.message}`, true);
+                }
+                event.target.value = '';
+            }
+        });
     });
 
     document.getElementById('export-all-csv-btn').addEventListener('click', () => {
